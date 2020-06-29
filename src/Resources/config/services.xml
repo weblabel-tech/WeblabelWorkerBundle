@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="weblabel_worker.logger" class="Weblabel\WorkerBundle\Logger\WorkerLogger">
+            <tag name="monolog.logger" channel="audit" />
+            <argument type="service" id="logger" on-invalid="ignore" />
+        </service>
+
+        <service id="weblabel_worker.provider.logger.context_provider" class="Weblabel\WorkerBundle\Provider\LoggerContextProvider"/>
+
+        <service id="weblabel_worker.handler.middleware.forward_stamp" class="Weblabel\WorkerBundle\Handler\Middleware\ForwardStampMiddleware">
+            <tag name="weblabel_worker.handler.middleware"/>
+        </service>
+
+        <service id="weblabel_worker.middleware.add_handler_id" class="Weblabel\WorkerBundle\Middleware\AddHandlerIdMiddleware"/>
+        <service id="weblabel_worker.middleware.add_execution_start_time" class="Weblabel\WorkerBundle\Middleware\AddExecutionStartTimeMiddleware"/>
+
+        <service id="weblabel_worker.middleware.sender_audit" class="Weblabel\WorkerBundle\Middleware\SenderAuditMiddleware">
+            <argument type="service" id="weblabel_worker.logger" on-invalid="ignore" />
+        </service>
+
+        <service id="weblabel_worker.middleware.handler_audit" class="Weblabel\WorkerBundle\Middleware\HandlerAuditMiddleware">
+            <argument type="service" id="weblabel_worker.logger" on-invalid="ignore" />
+            <argument type="service" id="weblabel_worker.provider.logger.context_provider" />
+        </service>
+    </services>
+</container>
