@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Weblabel\WorkerBundle\Tests\Unit\Provider;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\ClockMock;
 use Symfony\Component\Messenger\Envelope;
 use Weblabel\WorkerBundle\Provider\LoggerContextProvider;
 use Weblabel\WorkerBundle\Stamp\ExecutionStartTimeStamp;
@@ -17,6 +18,7 @@ class LoggerContextProviderTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        ClockMock::register(LoggerContextProvider::class);
         $this->loggerContextProvider = new LoggerContextProvider();
     }
 

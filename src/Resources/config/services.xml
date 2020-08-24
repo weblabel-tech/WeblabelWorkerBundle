@@ -13,6 +13,9 @@
         <service id="weblabel_worker.handler.middleware.forward_stamp" class="Weblabel\WorkerBundle\Handler\Middleware\ForwardStampMiddleware">
             <tag name="weblabel_worker.handler.middleware"/>
         </service>
+        <service id="weblabel_worker.handler.middleware.reply_stamp" class="Weblabel\WorkerBundle\Handler\Middleware\ReplyStampMiddleware">
+            <tag name="weblabel_worker.handler.middleware"/>
+        </service>
 
         <service id="weblabel_worker.middleware.add_handler_id" class="Weblabel\WorkerBundle\Middleware\AddHandlerIdMiddleware"/>
         <service id="weblabel_worker.middleware.add_execution_start_time" class="Weblabel\WorkerBundle\Middleware\AddExecutionStartTimeMiddleware"/>

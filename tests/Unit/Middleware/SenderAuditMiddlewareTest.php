@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Weblabel\WorkerBundle\Tests\Unit\Middleware;
 
+use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpStamp;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
@@ -28,6 +29,22 @@ class SenderAuditMiddlewareTest extends MiddlewareTestCase
 
         $middleware = new SenderAuditMiddleware($logger);
         $envelope = new Envelope(new \stdClass(), [HandlerIdStamp::create()]);
+
+        $middleware->handle($envelope, $stack);
+    }
+
+    public function test_logging_info_about_sending_command_with_reply_to()
+    {
+        $stack = $this->getStackMock();
+
+        $logger = $this->createMock(ContextAwareLogger::class);
+        $logger
+            ->expects(self::once())
+            ->method('info')
+            ->with('Command sent', ['replyTo' => 'foo']);
+
+        $middleware = new SenderAuditMiddleware($logger);
+        $envelope = new Envelope(new \stdClass(), [HandlerIdStamp::create(), new AmqpStamp('foo')]);
 
         $middleware->handle($envelope, $stack);
     }
