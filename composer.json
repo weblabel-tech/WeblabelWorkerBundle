@@ -5,9 +5,9 @@
     "require": {
         "php": "^7.4",
         "psr/log": "^1.1",
-        "symfony/framework-bundle": "^5.0",
-        "symfony/messenger": "^5.0",
-        "symfony/amqp-messenger": "^5.1"
+        "symfony/framework-bundle": "^5.2",
+        "symfony/messenger": "^5.2",
+        "symfony/amqp-messenger": "^5.2"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
